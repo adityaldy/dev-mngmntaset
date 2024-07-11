@@ -1,9 +1,11 @@
 import streamlit as st
+import requests
 
-# URL of the web page to embed
 url = "https://asset-sentosa.someah.id/"
-url = "https://google.com/"
+response = requests.get(url)
 
-
-# Embed the web page using an iframe
-st.components.v1.iframe(url, width=800, height=600)
+if response.status_code == 200:
+    st.title("Embed a Web Page in Streamlit")
+    st.components.v1.html(response.text, width=800, height=600)
+else:
+    st.error("Failed to retrieve the webpage content.")
