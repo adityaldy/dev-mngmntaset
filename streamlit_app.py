@@ -7,12 +7,17 @@ def start_browser(url):
     webview.create_window('Simple Browser', url)
     webview.start()
 
+# Function to render HTML content using streamlit's HTML support
+def render_html(url):
+    return f'<iframe src="{url}" width="100%" height="600"></iframe>'
+
 # Streamlit app
 st.title("Simple Browser")
 
 # URL input
-url = st.text_input("Enter the URL", "http://www.google.com")
+url = st.text_input("Enter the URL", "https://www.google.com")
 
 # Button to launch the browser
 if st.button("Open Browser"):
-    threading.Thread(target=start_browser, args=(url,), daemon=True).start()
+    # Embed the web page directly below the button
+    st.markdown(render_html(url), unsafe_allow_html=True)
