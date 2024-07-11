@@ -1,53 +1,18 @@
-import sys
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
-from PyQt5.QtWebEngineWidgets import *
+import streamlit as st
+import webview
+import threading
 
-class Browser(QMainWindow):
-    def __init__(self):
-        super(Browser, self).__init__()
-        self.browser = QWebEngineView()
-        self.browser.setUrl(QUrl("http://www.detik.com"))
-        self.setCentralWidget(self.browser)
-        self.showMaximized()
+# Function to start the webview browser
+def start_browser(url):
+    webview.create_window('Simple Browser', url)
+    webview.start()
 
-        # Navigation bar
-        navbar = QToolBar()
-        self.addToolBar(navbar)
+# Streamlit app
+st.title("Simple Browser")
 
-        back_btn = QAction('Back', self)
-        back_btn.triggered.connect(self.browser.back)
-        navbar.addAction(back_btn)
+# URL input
+url = st.text_input("Enter the URL", "http://www.google.com")
 
-        forward_btn = QAction('Forward', self)
-        forward_btn.triggered.connect(self.browser.forward)
-        navbar.addAction(forward_btn)
-
-        reload_btn = QAction('Reload', self)
-        reload_btn.triggered.connect(self.browser.reload)
-        navbar.addAction(reload_btn)
-
-        home_btn = QAction('Home', self)
-        home_btn.triggered.connect(self.navigate_home)
-        navbar.addAction(home_btn)
-
-        self.url_bar = QLineEdit()
-        self.url_bar.returnPressed.connect(self.navigate_to_url)
-        navbar.addWidget(self.url_bar)
-
-        self.browser.urlChanged.connect(self.update_url)
-
-    def navigate_home(self):
-        self.browser.setUrl(QUrl("http://www.google.com"))
-
-    def navigate_to_url(self):
-        url = self.url_bar.text()
-        self.browser.setUrl(QUrl(url))
-
-    def update_url(self, q):
-        self.url_bar.setText(q.toString())
-
-app = QApplication(sys.argv)
-QApplication.setApplicationName("My Browser")
-window = Browser()
-app.exec_()
+# Button to launch the browser
+if st.button("Open Browser"):
+    threading.Thread(target=start_browser, args=(url,), daemon=True).start()
