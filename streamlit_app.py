@@ -41,6 +41,6 @@ if response.status_code == 200:
     </html>
     """
     # Embed the HTML with JavaScript in Streamlit
-    st.components.v1.html(iframe_html, width=None, height=0, scrolling=True)
+    st.components.v1.html(iframe_html, width=800, height=600, scrolling=True)
 else:
     st.error("Failed to retrieve the webpage content.")
