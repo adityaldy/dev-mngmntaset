@@ -7,7 +7,7 @@ class Browser(QMainWindow):
     def __init__(self):
         super(Browser, self).__init__()
         self.browser = QWebEngineView()
-        self.browser.setUrl(QUrl("http://www.google.com"))
+        self.browser.setUrl(QUrl("http://www.detik.com"))
         self.setCentralWidget(self.browser)
         self.showMaximized()
 
