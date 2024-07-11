@@ -39,4 +39,4 @@ iframe_html = f"""
 """
 
 # Embed the HTML with JavaScript in Streamlit
-st.components.v1.html(iframe_html, width=None, height=0)
+st.components.v1.html(iframe_html, width=800, height=600, scrolling=True)
